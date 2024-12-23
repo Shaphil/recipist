@@ -1,25 +1,11 @@
-use actix_web::{get, post, App, HttpResponse, HttpServer, Responder};
-use serde_json::json;
+mod home;
 
-#[get("/")]
-async fn home() -> impl Responder {
-    HttpResponse::Ok().json(json!({"message": ".:: Welcome to Actix Web ::."}))
-}
-
-#[post("/echo")]
-async fn echo(message: String) -> impl Responder {
-    HttpResponse::Ok().body(message)
-}
-
+use actix_web::{App, HttpServer};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let address = ("127.0.0.1", 8080);
-    HttpServer::new(|| {
-        App::new()
-            .service(home)
-            .service(echo)
-    })
+    HttpServer::new(|| App::new().configure(home::urls::routes))
         .bind(address)?
         .run()
         .await
