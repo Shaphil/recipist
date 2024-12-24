@@ -4,6 +4,9 @@
 .code
 .code/**
 
+### dotenv
+.env
+
 ### compiled files and executables
 debug/
 target/
